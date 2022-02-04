@@ -10,21 +10,21 @@
   * [References](#references)
 <!--ToC-->
             
-            ## Workflow:
-            ### Steps for the new implementation
-###Step 1
+## Steps for the new implementation
+
+### Step 1
 
 The data we use includes structured numerical/categorical columns and unstructured text
 
-###Step 2
+### Step 2
 
 Identify sensitive outcome(s) to protect
  
-###Step 3 [Yiming]
+### Step 3 [Yiming]
 
 LightGBM on the text feature/cell to identify predictive keywords for the sensitive outcomes in Step 2 separately.
 
-###Step 4 [Yitong]
+### Step 4 [Yitong]
 
 Build a "semantic radius" around each keyword to establish a semi-quantitative distance metric to anchor different levels of obfuscation. For example, the top 10 keywords for the outcome "Marital Status" are: 'wife', 'husband', 'married', 'alone', 'daughter', 'widowed', 'son', 'lives', 'sex', 'she'. Based on semantic meanings, we can extract two "semantic clusters": 1: 'wife', 'husband', 'daughter', 'son'; 2: 'married', 'alone', 'widowed'. This step is to guarantee the readability of obfuscated text.
 Input 1 (for obfuscation): # keywords (higher = more obfuscation)
@@ -37,7 +37,7 @@ large=top 10 keywords, 40-60% distance from each keyword
 # words on the semantic radius=N
 Extra columns/features for SDV = k + k*N = k*(N+1)
 
-###RECIPES FOR STEPs 4 & 5
+### RECIPES FOR STEPs 4 & 5
 
 ???	KEYWORD: wife ??? 'husband', 'married',[0-33%] 'alone', 'daughter', 'widowed',[34-66%] 'son', 'lives', 'sex', 'she'[67-100%]
 ???	semantic_radius(keyword,#words on the radius=N)
@@ -51,7 +51,7 @@ GloVe: https://en.wikipedia.org/wiki/GloVe_(machine_learning) Training on the cu
 BERT: https://en.wikipedia.org/wiki/BERT_(language_model) UNIVERSAL
 
  
-###Step 5
+### Step 5
 
 Apply Datasifter to obfuscate Data: swap the keywords within "semantic clusters", may use BERT to further improve readability?
  
@@ -60,10 +60,10 @@ Apply Datasifter to obfuscate Data: swap the keywords within "semantic clusters"
 Recast text (before and after obfuscation) into tabular (e.g., incident matrix)
 Utility metric: apply LightGBM on the text feature/cell to identify predictive keywords for the sensitive outcomes in Step 2 and after Step 5 (after semantic radius has been ap[plied and keywords swapped).
 
-###Step 7 [Yitong]
+### Step 7 [Yitong]
 Apply SDV Privacy-Utility metrics to the recasted datasets (before and after obfuscation)
 
-###EXAMPLE OF A README FOR THE PSEUDOCODE AND INSTALLATION
+### EXAMPLE OF A README FOR THE PSEUDOCODE AND INSTALLATION
 
             $ cd DataSifterText-package
           ### remove pre-existing env
