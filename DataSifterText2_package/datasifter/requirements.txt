@@ -1,0 +1,11 @@
+gensim
+pandas
+nltk
+matplotlib
+numpy
+spacy
+lightgbm
+scikit-learn
+contractions
+seaborn
+setuptools
